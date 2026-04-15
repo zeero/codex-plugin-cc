@@ -1,11 +1,11 @@
 {
-  "name": "ai-marketplace",
+  "name": "openai-codex",
   "owner": {
-    "name": "Shared"
+    "name": "OpenAI"
   },
   "metadata": {
-    "description": "AI plugins (Codex & Gemini) to use in Claude Code for delegation and code review.",
-    "version": "1.1.0"
+    "description": "Codex plugins to use in Claude Code for delegation and code review.",
+    "version": "1.0.3"
   },
   "plugins": [
     {
