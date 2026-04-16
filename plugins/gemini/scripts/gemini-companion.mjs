@@ -116,37 +116,37 @@ async function handleReview(argv, isAdversarial = false) {
 
   let prompt = "";
   if (isAdversarial) {
-    prompt = `あなたは非常に厳しいセキュリティ監査官およびシニアソフトウェアアーキテクトです。
-以下のコード差分を、あえて批判的な視点でレビューしてください。
+    prompt = `You are a very strict security auditor and senior software architect.
+Review the following code diff from a critical perspective.
 
-## 重点項目
-- 設計のトレードオフの妥当性（もっとシンプル、あるいは堅牢な別の道はなかったか？）
-- 隠れた前提条件や、エッジケースでの不具合
-- レースコンディション、セキュリティ脆弱性、データ損失のリスク
-- 拡張性の欠如や、将来の負債になる可能性
+## Focus Items
+- Validity of design trade-offs (Was there a simpler or more robust alternative?)
+- Hidden assumptions and bugs in edge cases
+- Risks of race conditions, security vulnerabilities, and data loss
+- Lack of extensibility and potential for future technical debt
 
-${focusText ? `## ユーザーからの注力依頼\n${focusText}\n` : ""}
+${focusText ? `## User Focus Request\n${focusText}\n` : ""}
 
-## コード差分
+## Code Diff
 ${context.content}
 
-批判的かつ建設的なフィードバックを提供してください。`;
+Please provide critical and constructive feedback.`;
   } else {
-    prompt = `あなたは熟練のエンジニアです。以下のコード差分をレビューしてください。
+    prompt = `You are an expert engineer. Please review the following code diff.
 
-## レビューの指針
-1. **周辺コードとのトンマナ**: 既存のコードベースとスタイルや命名規則が揃っているか。
-2. **エレガントな実装**: より簡潔、効率的、あるいは可読性の高い実装方法はないか。
-3. **高凝集・疎結合・関心の分離**: クラスや関数が適切に分割され、責務が明確か。
-4. **SOLID原則 (特に単一責任原則)**: クラスやモジュールを変更する理由が1つだけに絞られているか。
-5. **バグ・脆弱性**: 明らかなバグやセキュリティ上の懸念はないか。
+## Review Guidelines
+1. **Consistency with Surrounding Code**: Check if styles and naming conventions match the existing codebase.
+2. **Elegant Implementation**: Look for more concise, efficient, or readable implementation methods.
+3. **High Cohesion, Loose Coupling, and Separation of Concerns**: Ensure classes and functions are properly divided with clear responsibilities.
+4. **SOLID Principles (especially Single Responsibility)**: Verify that classes or modules have only one reason to change.
+5. **Bugs and Vulnerabilities**: Look for obvious bugs or security concerns.
 
-${focusText ? `## ユーザーからの注力依頼\n${focusText}\n` : ""}
+${focusText ? `## User Focus Request\n${focusText}\n` : ""}
 
-## コード差分
+## Code Diff
 ${context.content}
 
-具体的かつ実行可能な改善案があれば、コード例とともに提示してください。`;
+Please provide specific and actionable improvement suggestions, including code examples where appropriate.`;
   }
 
   const result = executeGeminiPrompt(prompt);
@@ -164,13 +164,13 @@ async function handleRescue(argv) {
     throw new Error("Task description is required for rescue.");
   }
 
-  const prompt = `あなたは非常に優秀な開発アシスタントです。以下のタスクを遂行するための具体的な提案を行ってください。
-なお、あなたは直接ファイルを書き換えることはできません。実装が必要な場合は、コード片を提示してください。
+  const prompt = `You are a highly capable development assistant. Please provide specific proposals for the following task.
+Note that you cannot directly modify files. If implementation is needed, please provide code snippets.
 
-## タスク
+## Task
 ${task}
 
-解決策または調査結果を詳しく報告してください。`;
+Please report the solution or investigation results in detail.`;
 
   const result = executeGeminiPrompt(prompt);
   outputResult(result, options.json);
